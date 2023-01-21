@@ -4,12 +4,7 @@ import datetime
 import os
 
 app = Flask('')
-webhook_sender = webhook.send()
-webhook_link_list = [
-    os.environ["webhook_1"], 
-    os.environ["webhook_2"], 
-    os.environ["webhook_3"]
-]
+webhook_sender = webhook.send(eval(os.environ["webhook_dict_link"]))
 
 @app.route('/')
 def home():
@@ -52,7 +47,7 @@ def logger():
         wbhk = data["webhook"]
         webhook_timestamp = data["timestamp"].replace("/", "-").replace(" ", "T") + "Z"
         color = webhook.Embed.color[data["status"]]
-        embed = webhook.Embed(data["message"], wbhk["username"],  wbhk["id"], wbhk["channel"], webhook_timestamp, color)
+        embed = webhook.Embed(data["message"], wbhk["username"],  wbhk["id"], wbhk["channel"], webhook_timestamp, color, wbhk["type"])
         webhook_sender.addqueue(embed)
     # send.addqueue()
     # Calcul the ping (ms)
@@ -61,5 +56,5 @@ def logger():
     # Return status and ping with code 200
     return jsonify({"status": "saved", "ping": str(ping)}), 200
 
-webhook.always_run(webhook_link_list).run()
+webhook.always_run(webhook_sender).run()
 app.run(host='0.0.0.0',port=8080)

@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+import webhook
 import datetime
 import os
 
 app = Flask('')
+webhook_sender = webhook.send()
 
 @app.route('/')
 def home():
@@ -43,6 +45,10 @@ def logger():
     # Send on Discord by webhook
     if "webhook" in data.keys():
         wbhk = data["webhook"]
+        webhook_timestamp = data["timestamp"].replace("/", "-").replace(" ", "T") + "Z"
+        color = webhook.Embed.color[data["status"]]
+        embed = webhook.Embed(data["message"], wbhk["username"],  wbhk["id"], wbhk["channel"], webhook_timestamp, color)
+        webhook_sender.addqueue(embed)
     # send.addqueue()
     # Calcul the ping (ms)
     ping = current_timestamp - data_timestamp
@@ -50,4 +56,5 @@ def logger():
     # Return status and ping with code 200
     return jsonify({"status": "saved", "ping": str(ping)}), 200
 
+webhook.always_run().run()
 app.run(host='0.0.0.0',port=8080)

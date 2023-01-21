@@ -11,6 +11,14 @@ class Embed():
     no=13969191
     error=13969191
     info=2592725
+    color = {
+        "ok": 4959823, 
+        "wait": 14722834, 
+        "warning": 14722834, 
+        "no": 13969191, 
+        "error": 13969191, 
+        "info": 2592725
+    }
     # Generator
     def __init__(self, message, username, id, id_channel, timestamp, color) -> None:
         self.embed = {

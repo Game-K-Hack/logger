@@ -5,6 +5,11 @@ import os
 
 app = Flask('')
 webhook_sender = webhook.send()
+webhook_link_list = [
+    os.environ["webhook_1"], 
+    os.environ["webhook_2"], 
+    os.environ["webhook_3"]
+]
 
 @app.route('/')
 def home():
@@ -56,5 +61,5 @@ def logger():
     # Return status and ping with code 200
     return jsonify({"status": "saved", "ping": str(ping)}), 200
 
-webhook.always_run().run()
+webhook.always_run(webhook_link_list).run()
 app.run(host='0.0.0.0',port=8080)

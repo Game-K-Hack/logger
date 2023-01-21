@@ -60,13 +60,9 @@ class send():
             print(f"[  NO  ] Not sent with {result.status_code}, response:\n{result.json()}")
 
 class always_run():
-    def __init__(self) -> None:
+    def __init__(self, links:list) -> None:
         self.index = 0
-        self.webhook = [
-            os.environ["webhook_1"], 
-            os.environ["webhook_2"], 
-            os.environ["webhook_3"]
-        ]
+        self.webhook = links
         self.work = True
 
     def __index_update__(self):

@@ -1,7 +1,5 @@
-from flask import Flask, request, jsonify, redirect, url_for
-from threading import Thread
+from flask import Flask, request, jsonify
 import datetime
-import time
 import os
 
 app = Flask('')

@@ -59,9 +59,9 @@ class always_run():
 
     def __loop__(self):
         if send.isSendable():
-            send.send_webhooks(self.index)
+            send.send_webhooks(self.webhook[self.index])
             self.__index_update__()
         time.sleep(1)
 
     def run(self):
-        Thread()
+        Thread(target=self.__loop__).start()

@@ -40,6 +40,10 @@ def logger():
     data_timestamp = datetime.datetime.strptime(data["timestamp"], "%Y/%m/%d %H:%M:%S.%f")
     # Save log
     savelog(data["path"], data["status"], data["message"], data_timestamp)
+    # Send on Discord by webhook
+    if "webhook" in data.keys():
+        wbhk = data["webhook"]
+    # send.addqueue()
     # Calcul the ping (ms)
     ping = current_timestamp - data_timestamp
     ping = ping.total_seconds()*1000
